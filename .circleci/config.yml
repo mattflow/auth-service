@@ -19,7 +19,8 @@ jobs:
     steps:
       - checkout
       - run: npm install
-      - run: npm run test
+      - run: npm run test:cov
+      - run: npm run test:e2e
   build-and-deploy:
     machine: true
     steps:
