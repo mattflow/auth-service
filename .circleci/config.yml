@@ -1,18 +1,25 @@
 version: 2
 jobs:
-  test_build_deploy:
+  test:
     docker:
       - image: node:14
     steps:
       - checkout
       - run: npm install
       - run: npm run test
-      - setup_remote_docker:
-          version: 20.10.6
-      - run: docker build -t mattflow/auth-service .
+  build_deploy:
+    machine: true
+    steps:
+      - checkout
+      - run: |
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          docker build -t mattflow/auth-service:$TAG .
+          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+          docker push mattflow/auth-service:$TAG
 
 workflows:
   version: 2
   test_build_deploy:
     jobs:
-      - test_build_deploy
+      - test
+      - build_deploy
