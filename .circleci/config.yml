@@ -7,9 +7,16 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run test
+  build:
+    steps:
+      - checkout
+      - run: docker build -t mattflow/auth-service
+      - setup_remote_docker:
+        version: 20.10.7
 
 workflows:
   version: 2
-  test:
+  test_build:
     jobs:
       - test
+      - build
