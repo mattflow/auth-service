@@ -4,6 +4,9 @@ workflows:
     jobs:
       - test
       - build-and-deploy:
+          filters:
+            branches:
+              only: main
           context: docker-deploy
           requires:
             - test
