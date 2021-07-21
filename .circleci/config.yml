@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run test
-  build-and-deploy:
+  build_and_deploy:
     machine: true
     steps:
       - checkout
@@ -19,9 +19,9 @@ jobs:
 
 workflows:
   version: 2
-  test-build-and-deploy:
+  test_build_and_deploy:
     jobs:
       - test
-      - build-and-deploy:
+      - build_and_deploy:
         requires:
           - test
